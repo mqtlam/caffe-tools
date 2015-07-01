@@ -1,0 +1,15 @@
+{
+	"path": {
+		"caffe_root": "/path/to/caffe",
+		"deploy": "/path/to/caffe/models/bvlc_googlenet/deploy.prototxt",
+		"solver": "/path/to/caffe/models/bvlc_googlenet/quick_solver.prototxt",
+		"train_val": "/path/to/caffe/models/bvlc_googlenet/train_val.prototxt",
+		"mean_binaryproto_file": "/path/to/binaryproto/mean/file",
+		"mean_npy_file": "/path/to/npy/mean/file",
+		"caffemodel": "/path/to/googlenet/caffemodel"
+	},
+	"extract": {
+		"layer_name": "pool5/7x7_s1",
+		"input_size": [224, 224]
+	}
+}
