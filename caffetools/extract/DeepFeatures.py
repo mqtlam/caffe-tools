@@ -31,7 +31,7 @@ class DeepFeatures:
 		# input data processing: 'data' is the name of the input blob == net.inputs[0]
 		self.transformer = caffe.io.Transformer({'data': self.net.blobs['data'].data.shape})
 		self.transformer.set_transpose('data', (2,0,1))
-		#self.transformer.set_mean('data', np.load(config['path']['mean_npy_file']).mean(1).mean(1)) # mean pixel
+		self.transformer.set_mean('data', np.load(config['path']['mean_npy_file']).mean(1).mean(1)) # mean pixel
 		self.transformer.set_raw_scale('data', 255) # the reference model operates on images in [0,255] range instead of [0,1]
 		self.transformer.set_channel_swap('data', (2,1,0)) # the reference model has channels in BGR order instead of RGB
 
