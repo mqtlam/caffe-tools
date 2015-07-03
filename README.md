@@ -2,6 +2,7 @@
 Deep learning tools using caffe
 
 - utilities for extracting deep features from images [(more info)](caffetools/extract/README.md)
+- utilities for creating and converting mean files [(more info)](caffetools/mean/README.md)
 - utilities for storing and retrieving deep features into and from LMDB databases [(more info)](caffetools/lmdb/README.md)
 
 ## usage
