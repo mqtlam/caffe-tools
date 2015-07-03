@@ -3,12 +3,15 @@ LMDB tools provides an easy way to store and retrieve caffe features using a LMD
 
 [(up)](../../README.md)
 
+## NumPy Serializer
+A utility class is provided to serialize and unserialize NumPy arrays for storing into LMDB databases. It can also convert NumPy array into human-readable strings for passing into other programs.
+
 ## API
 Assuming your PYTHONPATH is set up properly (e.g. you are currently in the `$ROOT` directory), you can use the LMDBTools API calls as follows:
 
 ```python
 from caffetools.lmdb import lmdbtools as l
-from caffetools.lmdb.numpyserializer import NumpySerializer as n
+from caffetools.lmdb.numpyserializer import NumPySerializer as n
 import numpy as np
 
 with l.open('/path/to/lmdb') as db:
@@ -25,7 +28,7 @@ with l.open('/path/to/lmdb') as db:
 	value = n.unserialize_numpy(serialized_value)
 
 	# print entries
-	db.print_all()
+	db.print_entries()
 
 	# print keys
 	db.print_keys()

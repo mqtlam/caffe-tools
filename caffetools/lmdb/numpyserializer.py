@@ -1,9 +1,9 @@
 import numpy as np
 from tempfile import TemporaryFile
 
-class NumpySerializer():
+class NumPySerializer():
 	"""
-	Static methods to convert and serialize Numpy arrays.
+	Static methods to convert and serialize numpy arrays.
 	"""
 	@staticmethod
 	def serialize_numpy(array):
