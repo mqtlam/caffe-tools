@@ -8,4 +8,4 @@ This quick start will let you extract deep features from an image into a text fi
 
 1. `cd` into `$ROOT`
 2. create `config.json` (if not yet done) and fill out the appropriate paths and settings (use `config.json.template` as a guide)
-3. run `python caffetools/extract/extract_features.py /path/to/image.jpg /path/to/output/features.txt`
+3. run `python extract_features.py /path/to/image.jpg /path/to/output/features.txt`
