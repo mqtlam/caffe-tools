@@ -1,4 +1,6 @@
 import lmdb
+import numpy as np
+from tempfile import TemporaryFile
 
 class LMDBTools(object):
 	"""
