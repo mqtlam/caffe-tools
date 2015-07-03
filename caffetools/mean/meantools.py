@@ -10,11 +10,18 @@ sys.path.insert(0, config['path']['caffe_root'] + '/python')
 import caffe
 
 class MeanTools:
-	"""
-	Static methods for creating and converting mean files
+	"""Static methods for creating and converting mean files.
+	
 	"""
 	@staticmethod
 	def convert_binaryproto_to_npy(input_file, output_file):
+		"""Convert binaryproto file to npy file.
+
+		Args:
+			input_file (string): path to .binaryproto input file
+			output_file (string): path to .npy file for output
+
+		"""
 		blob = caffe.proto.caffe_pb2.BlobProto()
 		data = open(input_file, 'rb').read()
 		blob.ParseFromString(data)
