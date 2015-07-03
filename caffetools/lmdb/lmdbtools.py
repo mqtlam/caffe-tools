@@ -40,7 +40,7 @@ class LMDBTools(object):
 			result = txn.delete(key)
 		return result
 
-	def dump(self):
+	def print_entries(self):
 		"""
 		Print all (key,value) pairs in the database.
 		"""
@@ -49,7 +49,7 @@ class LMDBTools(object):
 			for key, value in cursor:
 				print (key, value)
 
-	def dump_keys(self):
+	def print_keys(self):
 		"""
 		Print all keys in the database.
 		"""
@@ -57,6 +57,17 @@ class LMDBTools(object):
 			cursor = txn.cursor()
 			for key, _ in cursor:
 				print key
+
+	def dump(self):
+		"""
+		Dump contents of database into a Python dictionary.
+		"""
+		dictionary = {}
+		with self.env.begin(write=False) as txn:
+			cursor = txn.cursor()
+			for key, value in cursor:
+				dictionary[key] = value
+		return dictionary
 
 def open(dbpath):
 	"""
