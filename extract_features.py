@@ -6,22 +6,22 @@ Usage: python extract_features.py /path/to/input/image.jpg /path/to/output/featu
 
 from caffetools.extract.DeepFeatures import DeepFeatures
 from caffetools.lmdb.numpyserializer import NumPySerializer
-import sys
+import argparse
 
 # parse arguments
-if len(sys.argv) < 3:
-	raise ValueError('invalid number of arguments')
-input_image_path = sys.argv[1]
-output_features_path = sys.argv[2]
+parser = argparse.ArgumentParser(description='Script to extract CNN features into LMDB')
+parser.add_argument('input_image_path', help='path to input image')
+parser.add_argument('output_features_path', help='path to output features text file')
+args = parser.parse_args()
 
 # extract features
 d = DeepFeatures()
-features = d.extract_features(input_image_path)
+features = d.extract_features(args.input_image_path)
 
 # save to text file
-with open(output_features_path, 'w') as f:
+with open(args.output_features_path, 'w') as f:
 	features_row_vector = features.reshape(1,-1)
 	features_string = NumPySerializer.numpy_to_string(features_row_vector)
 	f.write(features_string)
-	print "Features saved to '%s'" % output_features_path
+	print "Features saved to '%s'" % args.output_features_path
 
