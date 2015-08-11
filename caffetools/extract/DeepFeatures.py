@@ -1,13 +1,13 @@
 import numpy as np
 import sys
-import os
 
 # load settings
 import config
 config = config.load_settings()
 
 # load caffe
-sys.path.insert(0, config['path']['caffe_root'] + '/python')
+import os
+sys.path.insert(0, os.path.join(config['path']['caffe_root'], 'python'))
 import caffe
 
 class DeepFeatures:
