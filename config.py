@@ -11,6 +11,6 @@ def load_settings(config_file_path = DEFAULT_CONFIG_FILE_PATH):
 	for i in config:
 		for j in config[i]:
 			if isinstance(config[i][j], basestring):
-				config[i][j] = config[i][j].encode('ascii', errors='backslashreplace')
+				config[i][j] = config[i][j].encode('ascii')
 	return config
 
