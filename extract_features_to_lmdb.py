@@ -9,6 +9,7 @@ from caffetools.lmdb import lmdbtools
 from caffetools.lmdb.numpyserializer import NumPySerializer
 import argparse
 import os
+from tqdm import tqdm
 
 # parse arguments
 parser = argparse.ArgumentParser(description='Script to extract CNN features into LMDB')
@@ -27,20 +28,20 @@ with open(args.images_list_path, 'r') as f:
 
 # loop over images
 d = DeepFeatures()
-for image in images_list:
+for image in tqdm(images_list):
 	path_to_image = os.path.join(args.images_path, image)
 
 	# extract features
 	features = d.extract_features(path_to_image)
-	serialized_features = NumpySerializer.serialize_numpy(features)
+	serialized_features = NumPySerializer.serialize_numpy(features)
 
 	# save to lmdb
 	with lmdbtools.open(args.lmdb_path) as db:
-		if db.get(image): 
+		if not db.get(image): 
 			db.put(image, serialized_features)
-			if db.get('count'):
-				db.put('count', 1)
+			if not db.get('count'):
+				db.put('count', '1')
 			else:
 				count = db.get('count')
-				db.put('count', count+1)
+				db.put('count', str(int(count)+1))
 
