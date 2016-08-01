@@ -1,5 +1,5 @@
 """
-Script to extract CNN features using Googlenet.
+Script to extract CNN features using a caffe model.
 
 Usage: python extract_features.py /path/to/input/image.jpg /path/to/output/features.txt
 """
