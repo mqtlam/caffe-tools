@@ -16,6 +16,7 @@ parser = argparse.ArgumentParser(description='Script to extract CNN features int
 parser.add_argument('images_list_path', help='path to text file of list of images')
 parser.add_argument('images_path', help='path to base directory of images')
 parser.add_argument('output_path', help='path to output lmdb')
+parser.add_argument('--batch_size', type=int, default=64, help='batch size (default: 64)')
 args = parser.parse_args()
 
 # check
@@ -28,19 +29,23 @@ with open(args.images_list_path, 'r') as f:
 
 # loop over images
 d = DeepFeatures()
-for image in tqdm(images_list):
-	path_to_image = os.path.join(args.images_path, image)
+num_images = len(images_list)
+for batch_index in tqdm(range(0, num_images, args.batch_size):
+	batch = images_list[batch_index:batch_index+args.batch_size]
+	paths_to_images = [os.path.join(args.images_path, image) for image in batch]
 
 	# extract features
-	features = d.extract_features(path_to_image)
-	serialized_features = NumPySerializer.serialize_numpy(features)
+	features = d.extract_features_batch(paths_to_images)
 
 	# save to lmdb
-	with lmdbtools.open(args.output_path) as db:
-		if not db.get(image):
-			db.put(image, serialized_features)
-			if not db.get('count'):
-				db.put('count', '1')
-			else:
-				count = db.get('count')
-				db.put('count', str(int(count)+1))
+	for i, image in batch:
+		serialized_features = NumPySerializer.serialize_numpy(features[i])
+
+		with lmdbtools.open(args.output_path) as db:
+			if not db.get(image):
+				db.put(image, serialized_features)
+				if not db.get('count'):
+					db.put('count', '1')
+				else:
+					count = db.get('count')
+					db.put('count', str(int(count)+1))

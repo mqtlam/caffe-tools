@@ -14,6 +14,7 @@ parser = argparse.ArgumentParser(description='Script to extract CNN features int
 parser.add_argument('images_list_path', help='path to text file of list of images')
 parser.add_argument('images_path', help='path to base directory of images')
 parser.add_argument('output_path', help='path to output numpy file')
+parser.add_argument('--batch_size', type=int, default=64, help='batch size (default: 64)')
 args = parser.parse_args()
 
 # check
@@ -28,17 +29,19 @@ with open(args.images_list_path, 'r') as f:
 d = DeepFeatures()
 num_images = len(images_list)
 data = None
-for index, image in enumerate(tqdm(images_list)):
-	path_to_image = os.path.join(args.images_path, image)
+for batch_index in tqdm(range(0, num_images, args.batch_size):
+	batch = images_list[batch_index:batch_index+args.batch_size]
+	paths_to_images = [os.path.join(args.images_path, image) for image in batch]
 
 	# extract features
-	features = d.extract_features(path_to_image)
+	features = d.extract_features_batch(paths_to_images)
 	if not data:
-		feature_dim = features.shape[0]
+		feature_dim = features.shape[1]
 		data = np.zeros((num_images, feature_dim))
 
 	# put in numpy matrix
-	data[index, :] = features
+	for i, image in batch:
+		data[batch_index+i, :] = features[i]
 
 # save to numpy file
 np.save(args.output_path, data)

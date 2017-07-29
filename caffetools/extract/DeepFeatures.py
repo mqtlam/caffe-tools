@@ -62,7 +62,7 @@ class DeepFeatures:
 		"""Extract batch of deep features from a list of input images.
 
 		Args:
-			image_files_list (string): list of image paths
+			image_files_list (list): list of image paths
 
 		Returns:
 			deep features of images
